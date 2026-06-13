@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HF Sourcing Playbook — JPMC Talent Acquisition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0f1117;
+    --bg2: #161b27;
+    --bg3: #1e2435;
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.14);
+    --text: #e8eaf0;
+    --text2: #8b92a8;
+    --text3: #565e78;
+    --blue: #4a9eff;
+    --blue-bg: rgba(74,158,255,0.1);
+    --blue-border: rgba(74,158,255,0.25);
+    --purple: #a78bfa;
+    --purple-bg: rgba(167,139,250,0.1);
+    --purple-border: rgba(167,139,250,0.25);
+    --green: #34d399;
+    --green-bg: rgba(52,211,153,0.1);
+    --green-border: rgba(52,211,153,0.25);
+    --amber: #fbbf24;
+    --amber-bg: rgba(251,191,36,0.1);
+    --amber-border: rgba(251,191,36,0.25);
+    --red: #f87171;
+    --red-bg: rgba(248,113,113,0.1);
+    --red-border: rgba(248,113,113,0.25);
+    --radius: 10px;
+    --radius-sm: 6px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    background: var(--bg);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-brand { display: flex; align-items: center; gap: 10px; }
+  .brand-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--blue); }
+  .brand-name { font-size: 14px; font-weight: 500; color: var(--text); letter-spacing: 0.01em; }
+  .header-meta { font-size: 12px; color: var(--text3); }
+
+  /* ── PROGRESS BAR ── */
+  #progress-bar {
+    height: 2px;
+    background: var(--blue);
+    width: 0%;
+    transition: width 0.3s ease;
+  }
+
+  /* ── LAYOUT ── */
+  .shell { display: flex; min-height: calc(100vh - 57px); }
+
+  /* ── SIDEBAR ── */
+  nav {
+    width: 220px;
+    min-width: 220px;
+    border-right: 1px solid var(--border);
+    padding: 1.5rem 0;
+    position: sticky;
+    top: 57px;
+    height: calc(100vh - 57px);
+    overflow-y: auto;
+  }
+  .nav-section { padding: 0 1rem 1rem; }
+  .nav-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; color: var(--text3); text-transform: uppercase; margin-bottom: 6px; padding: 0 0.5rem; }
+  .nav-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 10px; border-radius: var(--radius-sm);
+    font-size: 13px; color: var(--text2); cursor: pointer;
+    transition: all 0.15s; border: none; background: none; width: 100%; text-align: left;
+  }
+  .nav-item:hover { background: var(--bg3); color: var(--text); }
+  .nav-item.active { background: var(--blue-bg); color: var(--blue); }
+  .nav-item .nav-icon { font-size: 14px; min-width: 16px; }
+  .nav-badge {
+    margin-left: auto; font-size: 10px; padding: 1px 6px;
+    border-radius: 10px; background: var(--bg3); color: var(--text3);
+  }
+  .nav-item.done .nav-badge { background: var(--green-bg); color: var(--green); }
+
+  /* ── MAIN ── */
+  main { flex: 1; overflow-x: hidden; }
+
+  /* ── MODULES (sections) ── */
+  .module { display: none; padding: 2.5rem 2rem 4rem; max-width: 820px; }
+  .module.active { display: block; }
+
+  .module-eyebrow {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--blue); margin-bottom: 8px;
+  }
+  .module-title { font-size: 26px; font-weight: 600; color: var(--text); margin-bottom: 8px; line-height: 1.3; }
+  .module-subtitle { font-size: 15px; color: var(--text2); margin-bottom: 2rem; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: 1rem;
+  }
+  .card-title { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+  .card-body { font-size: 13px; color: var(--text2); line-height: 1.7; }
+
+  /* ── BADGES ── */
+  .badge { font-size: 11px; padding: 2px 8px; border-radius: 20px; font-weight: 500; }
+  .badge-blue { background: var(--blue-bg); color: var(--blue); border: 1px solid var(--blue-border); }
+  .badge-purple { background: var(--purple-bg); color: var(--purple); border: 1px solid var(--purple-border); }
+  .badge-green { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+  .badge-amber { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-border); }
+  .badge-red { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
+
+  /* ── CODE BLOCK ── */
+  .code-wrap { position: relative; margin: 10px 0 0; }
+  .code-block {
+    background: var(--bg); border: 1px solid var(--border2);
+    border-radius: var(--radius-sm); padding: 12px 50px 12px 14px;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    color: #a8d8ff; line-height: 1.6; word-break: break-all;
+  }
+  .keyword { color: var(--purple); }
+  .operator { color: var(--amber); }
+  .site { color: var(--green); }
+  .copy-btn {
+    position: absolute; top: 8px; right: 8px;
+    padding: 3px 9px; font-size: 11px; font-family: 'Inter', sans-serif;
+    background: var(--bg3); border: 1px solid var(--border2);
+    color: var(--text2); border-radius: var(--radius-sm); cursor: pointer;
+    transition: all 0.15s;
+  }
+  .copy-btn:hover { background: var(--bg2); color: var(--text); }
+
+  /* ── SEARCH LAB ── */
+  .search-lab {
+    background: var(--bg2); border: 1px solid var(--border2);
+    border-radius: var(--radius); overflow: hidden; margin-bottom: 1rem;
+  }
+  .search-lab-header {
+    padding: 10px 14px; background: var(--bg3);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-red { background: #ff5f57; }
+  .dot-amber { background: #febc2e; }
+  .dot-green { background: #28c840; }
+  .lab-title { font-size: 12px; color: var(--text3); margin-left: 4px; font-family: 'JetBrains Mono', monospace; }
+
+  .search-input-row {
+    display: flex; gap: 8px; padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .search-input {
+    flex: 1; background: var(--bg); border: 1px solid var(--border2);
+    border-radius: var(--radius-sm); padding: 8px 12px;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    color: var(--text); outline: none;
+  }
+  .search-input:focus { border-color: var(--blue); }
+  .run-btn {
+    padding: 8px 16px; background: var(--blue); border: none;
+    border-radius: var(--radius-sm); color: #fff; font-size: 13px;
+    font-weight: 500; cursor: pointer; font-family: 'Inter', sans-serif;
+    white-space: nowrap; transition: opacity 0.15s;
+  }
+  .run-btn:hover { opacity: 0.85; }
+
+  .preset-row {
+    display: flex; gap: 6px; flex-wrap: wrap;
+    padding: 10px 14px; border-bottom: 1px solid var(--border);
+  }
+  .preset-chip {
+    font-size: 11px; padding: 3px 10px; border-radius: 20px;
+    background: var(--bg3); border: 1px solid var(--border2);
+    color: var(--text2); cursor: pointer; transition: all 0.15s;
+    font-family: 'Inter', sans-serif;
+  }
+  .preset-chip:hover { border-color: var(--blue); color: var(--blue); background: var(--blue-bg); }
+
+  .search-results {
+    padding: 14px; font-size: 13px; color: var(--text2); min-height: 80px;
+  }
+  .result-item {
+    padding: 10px 12px; border-radius: var(--radius-sm);
+    border: 1px solid var(--border); margin-bottom: 8px;
+    background: var(--bg);
+  }
+  .result-url { font-size: 11px; color: var(--green); font-family: 'JetBrains Mono', monospace; margin-bottom: 4px; }
+  .result-title { font-size: 13px; color: var(--blue); font-weight: 500; margin-bottom: 3px; }
+  .result-snippet { font-size: 12px; color: var(--text2); line-height: 1.6; }
+  .result-action {
+    display: inline-block; margin-top: 6px; font-size: 11px;
+    padding: 2px 8px; border-radius: 4px;
+    background: var(--blue-bg); color: var(--blue); border: 1px solid var(--blue-border);
+    text-decoration: none; cursor: pointer;
+  }
+  .search-hint { font-size: 12px; color: var(--text3); display: flex; align-items: center; gap: 6px; }
+
+  /* ── PROFILE VIEWER ── */
+  .profile-card {
+    background: var(--bg2); border: 1px solid var(--border2);
+    border-radius: var(--radius); overflow: hidden; margin-bottom: 1rem;
+  }
+  .profile-header {
+    padding: 1.25rem 1.5rem; display: flex; gap: 14px;
+    align-items: flex-start; border-bottom: 1px solid var(--border);
+  }
+  .avatar {
+    width: 56px; height: 56px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; font-weight: 600; flex-shrink: 0;
+  }
+  .profile-name { font-size: 16px; font-weight: 600; color: var(--text); }
+  .profile-handle { font-size: 13px; color: var(--text3); font-family: 'JetBrains Mono', monospace; }
+  .profile-bio { font-size: 13px; color: var(--text2); margin-top: 4px; }
+  .profile-tabs { display: flex; border-bottom: 1px solid var(--border); }
+  .profile-tab {
+    padding: 10px 16px; font-size: 13px; color: var(--text2);
+    cursor: pointer; border-bottom: 2px solid transparent;
+    transition: all 0.15s;
+  }
+  .profile-tab.active { color: var(--blue); border-bottom-color: var(--blue); }
+  .profile-body { padding: 1rem 1.5rem; }
+  .signal-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .signal-row:last-child { border: none; }
+  .signal-icon { font-size: 16px; color: var(--text3); min-width: 20px; }
+  .signal-label { font-size: 13px; color: var(--text2); flex: 1; }
+  .signal-value { font-size: 13px; font-weight: 500; }
+  .signal-high { color: var(--green); }
+  .signal-mid { color: var(--amber); }
+  .signal-low { color: var(--text3); }
+
+  /* ── SCORING QUIZ ── */
+  .quiz-q { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 10px; }
+  .quiz-options { display: grid; gap: 6px; margin-bottom: 16px; }
+  .quiz-opt {
+    padding: 10px 14px; border-radius: var(--radius-sm);
+    border: 1px solid var(--border2); background: var(--bg);
+    font-size: 13px; color: var(--text2); cursor: pointer;
+    transition: all 0.15s; text-align: left; font-family: 'Inter', sans-serif;
+    width: 100%;
+  }
+  .quiz-opt:hover { border-color: var(--blue); color: var(--text); background: var(--blue-bg); }
+  .quiz-opt.correct { border-color: var(--green); background: var(--green-bg); color: var(--green); }
+  .quiz-opt.wrong { border-color: var(--red); background: var(--red-bg); color: var(--red); }
+  .quiz-feedback { font-size: 13px; padding: 10px 14px; border-radius: var(--radius-sm); margin-bottom: 10px; }
+  .quiz-feedback.ok { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+  .quiz-feedback.err { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
+
+  /* ── PIPELINE ── */
+  .pipeline { display: flex; flex-direction: column; gap: 0; }
+  .pipeline-step {
+    display: flex; gap: 16px; padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .pipeline-step:last-child { border: none; }
+  .step-num {
+    width: 28px; height: 28px; min-width: 28px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 600; background: var(--blue-bg);
+    color: var(--blue); border: 1px solid var(--blue-border);
+  }
+  .step-content { flex: 1; }
+  .step-title { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+  .step-desc { font-size: 13px; color: var(--text2); line-height: 1.6; }
+  .step-tip {
+    margin-top: 8px; padding: 8px 12px; border-radius: var(--radius-sm);
+    background: var(--amber-bg); border: 1px solid var(--amber-border);
+    font-size: 12px; color: var(--amber);
+  }
+
+  /* ── COMPLIANCE CALLOUT ── */
+  .compliance-box {
+    border: 1px solid var(--red-border); border-radius: var(--radius);
+    padding: 1rem 1.25rem; background: var(--red-bg); margin: 1.5rem 0;
+  }
+  .compliance-title { font-size: 13px; font-weight: 600; color: var(--red); margin-bottom: 6px; display: flex; gap: 6px; align-items: center; }
+  .compliance-body { font-size: 13px; color: var(--text2); line-height: 1.7; }
+
+  /* ── INFO BOX ── */
+  .info-box {
+    border: 1px solid var(--blue-border); border-radius: var(--radius);
+    padding: 1rem 1.25rem; background: var(--blue-bg); margin: 1rem 0;
+  }
+  .info-body { font-size: 13px; color: var(--text2); line-height: 1.7; }
+
+  /* ── BUILDER ── */
+  select {
+    width: 100%; padding: 8px 12px; background: var(--bg);
+    border: 1px solid var(--border2); border-radius: var(--radius-sm);
+    color: var(--text); font-family: 'Inter', sans-serif; font-size: 13px;
+    outline: none; margin-bottom: 10px;
+  }
+  select:focus { border-color: var(--blue); }
+
+  /* ── VERIFY GRID ── */
+  .verify-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .verify-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1rem;
+  }
+  .verify-platform { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .verify-signal { font-size: 12px; color: var(--text2); margin-bottom: 8px; line-height: 1.5; }
+
+  /* ── NAV FOOTER ── */
+  .module-nav {
+    display: flex; gap: 10px; margin-top: 2.5rem;
+    padding-top: 1.5rem; border-top: 1px solid var(--border);
+  }
+  .btn-prev, .btn-next {
+    padding: 9px 20px; border-radius: var(--radius-sm);
+    font-size: 13px; font-weight: 500; cursor: pointer;
+    font-family: 'Inter', sans-serif; transition: all 0.15s;
+  }
+  .btn-prev { background: var(--bg3); border: 1px solid var(--border2); color: var(--text2); }
+  .btn-prev:hover { color: var(--text); }
+  .btn-next { background: var(--blue); border: none; color: #fff; }
+  .btn-next:hover { opacity: 0.85; }
+
+  /* ── SCORE DISPLAY ── */
+  .score-ring {
+    width: 80px; height: 80px; border-radius: 50%;
+    border: 3px solid var(--green); display: flex; flex-direction: column;
+    align-items: center; justify-content: center; margin: 0 auto 1rem;
+  }
+  .score-num { font-size: 22px; font-weight: 600; color: var(--green); }
+  .score-label { font-size: 10px; color: var(--text3); }
+
+  /* ── MOBILE ── */
+  @media (max-width: 640px) {
+    nav { display: none; }
+    .verify-grid { grid-template-columns: 1fr; }
+    .module { padding: 1.5rem 1rem 3rem; }
+  }
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<header>
+  <div class="header-brand">
+    <div class="brand-dot"></div>
+    <span class="brand-name">HF Passive Sourcing — Recruiter Playbook</span>
+  </div>
+  <span class="header-meta" id="progress-label">Module 1 of 6</span>
+</header>
+
+<div class="shell">
+  <nav>
+    <div class="nav-section">
+      <div class="nav-label">Modules</div>
+      <button class="nav-item active" onclick="goTo(0)">
+        <span class="nav-icon">◈</span> What is HF?
+        <span class="nav-badge" id="b0"></span>
+      </button>
+      <button class="nav-item" onclick="goTo(1)">
+        <span class="nav-icon">⌕</span> Boolean strings
+        <span class="nav-badge" id="b1"></span>
+      </button>
+      <button class="nav-item" onclick="goTo(2)">
+        <span class="nav-icon">⊙</span> Live search lab
+        <span class="nav-badge" id="b2"></span>
+      </button>
+      <button class="nav-item" onclick="goTo(3)">
+        <span class="nav-icon">◉</span> Profile decoder
+        <span class="nav-badge" id="b3"></span>
+      </button>
+      <button class="nav-item" onclick="goTo(4)">
+        <span class="nav-icon">⧗</span> Cross-verify
+        <span class="nav-badge" id="b4"></span>
+      </button>
+      <button class="nav-item" onclick="goTo(5)">
+        <span class="nav-icon">✦</span> Compliance + SOP
+        <span class="nav-badge" id="b5"></span>
+      </button>
+    </div>
+    <div class="nav-section" style="border-top:1px solid var(--border);padding-top:1rem;margin-top:0.5rem;">
+      <div class="nav-label">Score</div>
+      <div style="padding:0 0.5rem;font-size:13px;color:var(--text2);">
+        Quiz: <span id="score-display" style="color:var(--green);font-weight:500;">0 / 0</span>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <!-- ═══════════════ MODULE 0: WHAT IS HF ═══════════════ -->
+    <section class="module active" id="mod0">
+      <div class="module-eyebrow">Module 1 — Foundation</div>
+      <h1 class="module-title">What is Hugging Face — and why does it matter for sourcing?</h1>
+      <p class="module-subtitle">A 3-minute primer before you run a single search.</p>
+
+      <div class="card">
+        <div class="card-title"><span class="badge badge-blue">Think of it as</span></div>
+        <div class="card-body">
+          Hugging Face (HF) is the GitHub of AI. Just like developers post code to GitHub, AI practitioners publish their <strong style="color:var(--text)">models, apps, and datasets</strong> to HF — publicly, with their username attached. Most people in the AI builder space have a profile there, even if they don't know they're "being sourced."
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:1rem;">
+        <div class="card" style="text-align:center;padding:1.25rem 1rem;">
+          <div style="font-size:28px;font-weight:600;color:var(--blue);">Models</div>
+          <div style="font-size:12px;color:var(--text2);margin-top:4px;">AI models people trained or fine-tuned. Like publishing a book.</div>
+        </div>
+        <div class="card" style="text-align:center;padding:1.25rem 1rem;">
+          <div style="font-size:28px;font-weight:600;color:var(--purple);">Spaces</div>
+          <div style="font-size:12px;color:var(--text2);margin-top:4px;">Live demos and apps. Someone built and shipped something. Highest signal.</div>
+        </div>
+        <div class="card" style="text-align:center;padding:1.25rem 1rem;">
+          <div style="font-size:28px;font-weight:600;color:var(--green);">Datasets</div>
+          <div style="font-size:12px;color:var(--text2);margin-top:4px;">Training data someone curated. Rare skill — very high value.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Who are you looking for?</div>
+        <div class="card-body">
+          The <strong style="color:var(--text)">AI Builder persona</strong> — someone at the intersection of software engineering and LLMs. Not a researcher who just reads papers. Not a data scientist who only runs notebooks. Someone who builds <em>agentic systems</em> — autonomous AI that can take actions, use tools, and chain reasoning steps.
+        </div>
+        <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:6px;">
+          <span class="badge badge-purple">LangGraph / LangChain</span>
+          <span class="badge badge-purple">CrewAI / AutoGen</span>
+          <span class="badge badge-blue">Fine-tuning / LoRA / RLHF</span>
+          <span class="badge badge-blue">RAG / vector stores</span>
+          <span class="badge badge-green">Function calling / MCP</span>
+          <span class="badge badge-amber">vLLM / TGI / deployment</span>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <div class="info-body"><strong style="color:var(--blue)">Good news:</strong> You do NOT need a Hugging Face account. All profiles, Models, Spaces, and Datasets are publicly viewable. Google has already indexed them. Your job is to use the right search strings to surface them.</div>
+      </div>
+
+      <div class="card" style="margin-top:1rem;">
+        <div class="quiz-q">Quick check — what does a "Space" on Hugging Face represent?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answer(this, false, 'mod0-q1')">A private workspace for teams</button>
+          <button class="quiz-opt" onclick="answer(this, true, 'mod0-q1')">A live deployed app or demo someone built and published</button>
+          <button class="quiz-opt" onclick="answer(this, false, 'mod0-q1')">A job board for AI roles</button>
+        </div>
+        <div id="mod0-q1-feedback" class="quiz-feedback" style="display:none"></div>
+      </div>
+
+      <div class="module-nav">
+        <button class="btn-next" onclick="goTo(1)">Next: Boolean strings →</button>
+      </div>
+    </section>
+
+    <!-- ═══════════════ MODULE 1: BOOLEAN ═══════════════ -->
+    <section class="module" id="mod1">
+      <div class="module-eyebrow">Module 2 — Core skill</div>
+      <h1 class="module-title">Boolean strings that actually work</h1>
+      <p class="module-subtitle">Copy, paste, run in Google. No HF login needed.</p>
+
+      <div class="card">
+        <div class="card-title"><span class="badge badge-blue">How it works</span> The site: operator</div>
+        <div class="card-body">Google has already crawled HF. <code style="color:var(--green);font-size:12px;">site:huggingface.co/spaces</code> tells Google to search only inside HF Spaces. You combine that with skill keywords to find builders.</div>
+        <div class="code-wrap">
+          <div class="code-block"><span class="site">site:huggingface.co/spaces</span> <span class="operator">(</span><span class="keyword">"LangGraph"</span> <span class="operator">OR</span> <span class="keyword">"CrewAI"</span><span class="operator">)</span> <span class="keyword">"agent"</span></div>
+          <button class="copy-btn" onclick="cp(this)">copy</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="badge badge-purple">Agentic AI builders</span> — strongest signal</div>
+        <div class="card-body">People who shipped a working agent demo. Combine framework names + behavior keywords.</div>
+        <div class="code-wrap">
+          <div class="code-block"><span class="site">site:huggingface.co/spaces</span> <span class="operator">(</span><span class="keyword">"LangGraph"</span> <span class="operator">OR</span> <span class="keyword">"CrewAI"</span> <span class="operator">OR</span> <span class="keyword">"AutoGen"</span><span class="operator">)</span> <span class="operator">(</span><span class="keyword">"tool"</span> <span class="operator">OR</span> <span class="keyword">"function calling"</span> <span class="operator">OR</span> <span class="keyword">"ReAct"</span><span class="operator">)</span></div>
+          <button class="copy-btn" onclick="cp(this)">copy</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="badge badge-blue">LLM fine-tune specialists</span></div>
+        <div class="card-body">Targets model cards published by practitioners who fine-tune foundation models.</div>
+        <div class="code-wrap">
+          <div class="code-block"><span class="site">site:huggingface.co/models</span> <span class="operator">(</span><span class="keyword">"LoRA"</span> <span class="operator">OR</span> <span class="keyword">"RLHF"</span> <span class="operator">OR</span> <span class="keyword">"DPO"</span> <span class="operator">OR</span> <span class="keyword">"fine-tuned"</span><span class="operator">)</span> <span class="operator">(</span><span class="keyword">"LLaMA"</span> <span class="operator">OR</span> <span class="keyword">"Mistral"</span> <span class="operator">OR</span> <span class="keyword">"Gemma"</span><span class="operator">)</span></div>
+          <button class="copy-btn" onclick="cp(this)">copy</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="badge badge-green">RAG / retrieval builders</span></div>
+        <div class="code-wrap">
+          <div class="code-block"><span class="site">site:huggingface.co/spaces</span> <span class="operator">(</span><span class="keyword">"RAG"</span> <span class="operator">OR</span> <span class="keyword">"retrieval augmented"</span> <span class="operator">OR</span> <span class="keyword">"FAISS"</span> <span class="operator">OR</span> <span class="keyword">"ChromaDB"</span><span class="operator">)</span></div>
+          <button class="copy-btn" onclick="cp(this)">copy</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="badge badge-amber">MCP / tool-calling (emerging skill)</span></div>
+        <div class="code-wrap">
+          <div class="code-block"><span class="site">site:huggingface.co</span> <span class="operator">(</span><span class="keyword">"MCP"</span> <span class="operator">OR</span> <span class="keyword">"Model Context Protocol"</span> <span class="operator">OR</span> <span class="keyword">"tool_calls"</span><span class="operator">)</span> <span class="keyword">"agent"</span></div>
+          <button class="copy-btn" onclick="cp(this)">copy</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="badge badge-purple">Research authors who also ship</span></div>
+        <div class="card-body">People who wrote an arXiv paper AND linked HF code — rarest and most valuable.</div>
+        <div class="code-wrap">
+          <div class="code-block"><span class="site">site:huggingface.co/papers</span> <span class="operator">(</span><span class="keyword">"agentic"</span> <span class="operator">OR</span> <span class="keyword">"tool use"</span> <span class="operator">OR</span> <span class="keyword">"RAG"</span> <span class="operator">OR</span> <span class="keyword">"multi-agent"</span><span class="operator">)</span> <span class="keyword">2025</span></div>
+          <button class="copy-btn" onclick="cp(this)">copy</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:1rem;">
+        <div class="quiz-q">Which search string is best for finding someone who built and deployed an agent app?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answer(this, false, 'mod1-q1')">site:huggingface.co/models "LLaMA"</button>
+          <button class="quiz-opt" onclick="answer(this, true, 'mod1-q1')">site:huggingface.co/spaces "LangGraph" OR "CrewAI" "agent"</button>
+          <button class="quiz-opt" onclick="answer(this, false, 'mod1-q1')">site:huggingface.co/datasets "agent"</button>
+        </div>
+        <div id="mod1-q1-feedback" class="quiz-feedback" style="display:none"></div>
+      </div>
+
+      <div class="module-nav">
+        <button class="btn-prev" onclick="goTo(0)">← Back</button>
+        <button class="btn-next" onclick="goTo(2)">Next: Live search lab →</button>
+      </div>
+    </section>
+
+    <!-- ═══════════════ MODULE 2: LIVE LAB ═══════════════ -->
+    <section class="module" id="mod2">
+      <div class="module-eyebrow">Module 3 — Hands-on</div>
+      <h1 class="module-title">Live search lab</h1>
+      <p class="module-subtitle">Practice building and running search strings. Results open in Google.</p>
+
+      <div class="search-lab">
+        <div class="search-lab-header">
+          <div class="dot dot-red"></div>
+          <div class="dot dot-amber"></div>
+          <div class="dot dot-green"></div>
+          <span class="lab-title">search-lab.exe — Google Boolean Practice</span>
+        </div>
+        <div class="search-input-row">
+          <input class="search-input" id="lab-input" type="text" value='site:huggingface.co/spaces "LangGraph" "agent"' placeholder="Type or paste a boolean string...">
+          <button class="run-btn" onclick="runSearch()">Run in Google ↗</button>
+        </div>
+        <div class="preset-row">
+          <span style="font-size:11px;color:var(--text3);align-self:center;margin-right:4px;">Load preset:</span>
+          <span class="preset-chip" onclick="loadPreset(0)">Agentic builders</span>
+          <span class="preset-chip" onclick="loadPreset(1)">LLM fine-tuners</span>
+          <span class="preset-chip" onclick="loadPreset(2)">RAG engineers</span>
+          <span class="preset-chip" onclick="loadPreset(3)">MCP / tool-calling</span>
+          <span class="preset-chip" onclick="loadPreset(4)">Research + code</span>
+          <span class="preset-chip" onclick="loadPreset(5)">GitHub verify</span>
+        </div>
+        <div class="search-results" id="lab-results">
+          <div class="search-hint">← Load a preset or type your own string, then click <strong style="color:var(--text)">Run in Google</strong> to open real results.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">How to read Google results for HF profiles</div>
+        <div class="pipeline" style="margin-top:8px;">
+          <div class="pipeline-step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <div class="step-title">Look at the URL</div>
+              <div class="step-desc">Results with <code style="color:var(--green);font-size:12px;">huggingface.co/{username}/spaces/{name}</code> or <code style="color:var(--green);font-size:12px;">huggingface.co/{username}/</code> — that's a person's page, not a documentation page.</div>
+            </div>
+          </div>
+          <div class="pipeline-step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <div class="step-title">Extract the username</div>
+              <div class="step-desc">The part after <code style="color:var(--green);font-size:12px;">huggingface.co/</code> and before the next slash is the username. Navigate directly to <code style="color:var(--green);font-size:12px;">huggingface.co/{username}</code> to see their full profile.</div>
+            </div>
+          </div>
+          <div class="pipeline-step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <div class="step-title">Exclude docs + blog</div>
+              <div class="step-desc">Add <code style="color:var(--amber);font-size:12px;">-site:huggingface.co/docs -site:huggingface.co/blog</code> to your string to remove documentation pages from results.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="quiz-q">You run a search and get this URL: <code style="color:var(--green);font-size:12px;">huggingface.co/jsmith42/spaces/agent-demo</code> — what is the username?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answer(this, false, 'mod2-q1')">agent-demo</button>
+          <button class="quiz-opt" onclick="answer(this, true, 'mod2-q1')">jsmith42</button>
+          <button class="quiz-opt" onclick="answer(this, false, 'mod2-q1')">spaces</button>
+        </div>
+        <div id="mod2-q1-feedback" class="quiz-feedback" style="display:none"></div>
+      </div>
+
+      <div class="module-nav">
+        <button class="btn-prev" onclick="goTo(1)">← Back</button>
+        <button class="btn-next" onclick="goTo(3)">Next: Profile decoder →</button>
+      </div>
+    </section>
+
+    <!-- ═══════════════ MODULE 3: PROFILE DECODER ═══════════════ -->
+    <section class="module" id="mod3">
+      <div class="module-eyebrow">Module 4 — Qualify</div>
+      <h1 class="module-title">Profile decoder — builder vs browser</h1>
+      <p class="module-subtitle">Not every HF profile is a candidate. Learn to separate builders from followers in under 60 seconds.</p>
+
+      <p style="font-size:13px;color:var(--text2);margin-bottom:12px;">Click each tab to inspect different profile types:</p>
+
+      <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+        <button class="preset-chip" onclick="showProfile(0)" style="border-color:var(--green);color:var(--green)">High signal ✓</button>
+        <button class="preset-chip" onclick="showProfile(1)" style="border-color:var(--amber);color:var(--amber)">Mid signal ~</button>
+        <button class="preset-chip" onclick="showProfile(2)" style="border-color:var(--red);color:var(--red)">Low signal ✗</button>
+      </div>
+
+      <div class="profile-card" id="profile-display">
+        <div class="profile-header">
+          <div class="avatar" id="pf-avatar" style="background:var(--blue-bg);color:var(--blue);">AK</div>
+          <div>
+            <div class="profile-name" id="pf-name">Arjun Kapoor</div>
+            <div class="profile-handle" id="pf-handle">@arjunbuilds</div>
+            <div class="profile-bio" id="pf-bio">AI engineer @ Databricks | Building agentic systems with LangGraph | ex-Google Brain | San Francisco, CA</div>
+          </div>
+        </div>
+        <div class="profile-tabs">
+          <div class="profile-tab active">Signals</div>
+          <div class="profile-tab" style="color:var(--text3)">Verdict</div>
+        </div>
+        <div class="profile-body" id="pf-body"></div>
+      </div>
+
+      <div class="card" style="margin-top:1rem;">
+        <div class="card-title">What to ignore</div>
+        <div class="card-body">
+          <strong style="color:var(--text)">Likes and upvotes given to other people's work</strong> — tells you they follow AI, not that they build it. Focus only on what they have <em>published</em>: Models, Spaces, Datasets, Papers. Activity feed recency matters — last commit 18 months ago is a weak signal regardless of repo count.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="quiz-q">You find an HF profile: 47 models liked, 0 Spaces published, 0 models uploaded, last activity 14 months ago. What do you do?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answer(this, false, 'mod3-q1')">Add to pipeline — they follow AI closely so they're probably skilled</button>
+          <button class="quiz-opt" onclick="answer(this, true, 'mod3-q1')">Skip — this is a consumer, not a builder. No published work = no sourcing signal.</button>
+          <button class="quiz-opt" onclick="answer(this, false, 'mod3-q1')">Send InMail immediately — likes show interest</button>
+        </div>
+        <div id="mod3-q1-feedback" class="quiz-feedback" style="display:none"></div>
+      </div>
+
+      <div class="module-nav">
+        <button class="btn-prev" onclick="goTo(2)">← Back</button>
+        <button class="btn-next" onclick="goTo(4)">Next: Cross-verify →</button>
+      </div>
+    </section>
+
+    <!-- ═══════════════ MODULE 4: CROSS-VERIFY ═══════════════ -->
+    <section class="module" id="mod4">
+      <div class="module-eyebrow">Module 5 — Verify</div>
+      <h1 class="module-title">Cross-verify on other platforms</h1>
+      <p class="module-subtitle">HF gives you the username. These platforms give you the person.</p>
+
+      <div class="info-box">
+        <div class="info-body"><strong style="color:var(--blue)">The identity ladder:</strong> HF username → GitHub (linked in bio) → GitHub README (often has LinkedIn/Twitter) → LinkedIn. Most builders can be fully triangulated in under 3 minutes.</div>
+      </div>
+
+      <div class="verify-grid" style="margin:1rem 0;">
+        <div class="verify-card">
+          <div class="verify-platform">GitHub</div>
+          <div class="verify-signal">Strongest signal. Check contribution streak, repo stars, Python dominance, topic tags on repos.</div>
+          <div class="code-wrap">
+            <div class="code-block" style="font-size:11px;padding-right:50px;"><span class="site">site:github.com</span> <span class="keyword">"[username]"</span> <span class="keyword">"langchain"</span> <span class="operator">OR</span> <span class="keyword">"transformers"</span></div>
+            <button class="copy-btn" style="top:6px;right:6px;" onclick="cp(this)">copy</button>
+          </div>
+        </div>
+        <div class="verify-card">
+          <div class="verify-platform">LinkedIn</div>
+          <div class="verify-signal">Ground truth for location + employer. Use name + org from HF profile to find them.</div>
+          <div class="code-wrap">
+            <div class="code-block" style="font-size:11px;padding-right:50px;"><span class="site">site:linkedin.com/in</span> <span class="keyword">"[full name]"</span> <span class="keyword">"LangChain"</span> <span class="operator">OR</span> <span class="keyword">"LLM"</span></div>
+            <button class="copy-btn" style="top:6px;right:6px;" onclick="cp(this)">copy</button>
+          </div>
+        </div>
+        <div class="verify-card">
+          <div class="verify-platform">Stack Overflow</div>
+          <div class="verify-signal">High-rep users in ml / pytorch / langchain tags = confirmed technical depth.</div>
+          <div class="code-wrap">
+            <div class="code-block" style="font-size:11px;padding-right:50px;"><span class="site">site:stackoverflow.com/users</span> <span class="keyword">"[name]"</span></div>
+            <button class="copy-btn" style="top:6px;right:6px;" onclick="cp(this)">copy</button>
+          </div>
+        </div>
+        <div class="verify-card">
+          <div class="verify-platform">Kaggle</div>
+          <div class="verify-signal">Grandmaster/Master tier = elite ML. Notebook count signals teaching contribution.</div>
+          <div class="code-wrap">
+            <div class="code-block" style="font-size:11px;padding-right:50px;"><span class="site">site:kaggle.com</span> <span class="keyword">"[username]"</span> <span class="operator">OR</span> <span class="keyword">"[full name]"</span></div>
+            <button class="copy-btn" style="top:6px;right:6px;" onclick="cp(this)">copy</button>
+          </div>
+        </div>
+        <div class="verify-card">
+          <div class="verify-platform">Google Scholar</div>
+          <div class="verify-signal">Confirms researcher identity. Look for applied AI papers with linked code repos.</div>
+          <div class="code-wrap">
+            <div class="code-block" style="font-size:11px;padding-right:50px;"><span class="site">site:scholar.google.com</span> <span class="keyword">"[full name]"</span> <span class="keyword">"agentic"</span></div>
+            <button class="copy-btn" style="top:6px;right:6px;" onclick="cp(this)">copy</button>
+          </div>
+        </div>
+        <div class="verify-card">
+          <div class="verify-platform">Location inference</div>
+          <div class="verify-signal">HF has no structured location. Infer via GitHub profile field or LinkedIn — never filter in the HF string itself.</div>
+          <div class="code-wrap">
+            <div class="code-block" style="font-size:11px;padding-right:50px;"><span class="site">site:github.com</span> <span class="keyword">"[username]"</span> <span class="keyword">"San Francisco"</span> <span class="operator">OR</span> <span class="keyword">"New York"</span></div>
+            <button class="copy-btn" style="top:6px;right:6px;" onclick="cp(this)">copy</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="quiz-q">A candidate's HF profile has no location listed. What's the best way to confirm they are US-based?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answer(this, false, 'mod4-q1')">Add "United States" to your HF boolean string — it searches bios</button>
+          <button class="quiz-opt" onclick="answer(this, false, 'mod4-q1')">Assume US based on their username</button>
+          <button class="quiz-opt" onclick="answer(this, true, 'mod4-q1')">Pivot to their linked GitHub or LinkedIn profile — both have location fields that people actually fill out</button>
+        </div>
+        <div id="mod4-q1-feedback" class="quiz-feedback" style="display:none"></div>
+      </div>
+
+      <div class="module-nav">
+        <button class="btn-prev" onclick="goTo(3)">← Back</button>
+        <button class="btn-next" onclick="goTo(5)">Next: Compliance + SOP →</button>
+      </div>
+    </section>
+
+    <!-- ═══════════════ MODULE 5: COMPLIANCE + SOP ═══════════════ -->
+    <section class="module" id="mod5">
+      <div class="module-eyebrow">Module 6 — Rules + Process</div>
+      <h1 class="module-title">Compliance guardrails + your sourcing SOP</h1>
+      <p class="module-subtitle">The rules that keep sourcing clean — and the workflow to follow every session.</p>
+
+      <div class="compliance-box">
+        <div class="compliance-title">⚠ EEOC + JPMC sourcing compliance — read this first</div>
+        <div class="compliance-body">
+          <strong style="color:var(--text)">Do NOT filter by location as a proxy for national origin or citizenship at the sourcing stage.</strong> If a role requires US work authorization, that conversation happens in screening — not in your Boolean string. Source broadly on skill signals. Qualify on eligibility during the outreach call. Never record inferred demographics (ethnicity, age, gender) in your CRM from profile photos or names. When in doubt, check with your TA legal partner.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Your 6-step sourcing SOP</div>
+        <div class="pipeline" style="margin-top:8px;">
+          <div class="pipeline-step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <div class="step-title">Run 3–4 Google boolean strings</div>
+              <div class="step-desc">Use the string builder or copy from the module 2 presets. Target Spaces first (highest signal), then Models. Scan first 2 pages of results each.</div>
+              <div class="step-tip">Batch mode: run all strings in one session before qualifying any. Don't context-switch — it kills velocity.</div>
+            </div>
+          </div>
+          <div class="pipeline-step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <div class="step-title">Extract usernames from URLs</div>
+              <div class="step-desc">The path segment after <code style="color:var(--green);font-size:12px;">huggingface.co/</code> is the username. Navigate to <code style="color:var(--green);font-size:12px;">huggingface.co/{username}</code> — public, no login needed. Add username to tracking sheet.</div>
+            </div>
+          </div>
+          <div class="pipeline-step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <div class="step-title">Qualify the profile (60-second rule)</div>
+              <div class="step-desc">Check: Spaces published (3+ = strong), model downloads (500+ = traction), GitHub linked (yes/no), last activity (within 90 days?). Score high/mid/skip.</div>
+            </div>
+          </div>
+          <div class="pipeline-step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <div class="step-title">Pivot to GitHub</div>
+              <div class="step-desc">Click GitHub link from HF bio. Confirm: Python-heavy repos, recent commits, stars on agent or LLM repos. This also often surfaces their real name.</div>
+            </div>
+          </div>
+          <div class="pipeline-step">
+            <div class="step-num">5</div>
+            <div class="step-content">
+              <div class="step-title">Confirm identity on LinkedIn</div>
+              <div class="step-desc">Search real name + org from HF profile on LinkedIn. Confirm current employer, seniority, and location. Only add to pipeline once confirmed.</div>
+              <div class="step-tip">Location and work auth screening happens here — in conversation, not in your search string.</div>
+            </div>
+          </div>
+          <div class="pipeline-step">
+            <div class="step-num">6</div>
+            <div class="step-content">
+              <div class="step-title">Personalize your outreach</div>
+              <div class="step-desc">Reference something specific: "I saw your [SpaceName] agent on HF — the approach to [specific thing] stood out." Generic InMails get ignored. Specific ones get replies.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Prioritize vs skip — at a glance</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px;">
+          <div style="background:var(--green-bg);border:1px solid var(--green-border);border-radius:var(--radius-sm);padding:12px;">
+            <div style="font-size:12px;font-weight:600;color:var(--green);margin-bottom:6px;">✓ Prioritize</div>
+            <div style="font-size:12px;color:var(--text2);line-height:1.7;">3+ Spaces published · 500+ model downloads · GitHub linked + active last 30 days · org membership at target co · paper with code</div>
+          </div>
+          <div style="background:var(--red-bg);border:1px solid var(--red-border);border-radius:var(--radius-sm);padding:12px;">
+            <div style="font-size:12px;font-weight:600;color:var(--red);margin-bottom:6px;">✗ Skip</div>
+            <div style="font-size:12px;color:var(--text2);line-height:1.7;">Only liked others' models · 0 uploads · no GitHub link · last activity 12+ months · no bio · only downloaded datasets</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:1rem;">
+        <div class="quiz-q">A role requires US work authorization. When should you ask the candidate about this?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="answer(this, false, 'mod5-q1')">In the Boolean string — add "United States" to filter upfront</button>
+          <button class="quiz-opt" onclick="answer(this, false, 'mod5-q1')">In your CRM notes based on the candidate's name</button>
+          <button class="quiz-opt" onclick="answer(this, true, 'mod5-q1')">During the screening call — source on skills, qualify on eligibility in conversation</button>
+        </div>
+        <div id="mod5-q1-feedback" class="quiz-feedback" style="display:none"></div>
+      </div>
+
+      <div style="margin-top:2rem;text-align:center;padding:2rem;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);">
+        <div class="score-ring" id="final-ring">
+          <div class="score-num" id="final-score">—</div>
+          <div class="score-label">YOUR SCORE</div>
+        </div>
+        <div style="font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;" id="final-msg">Complete all quizzes to see your score</div>
+        <div style="font-size:13px;color:var(--text2)" id="final-sub"></div>
+      </div>
+
+      <div class="module-nav">
+        <button class="btn-prev" onclick="goTo(4)">← Back</button>
+        <button class="btn-next" onclick="restart()">↺ Restart training</button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+let currentMod = 0;
+const totalMods = 6;
+let quizScore = 0;
+let quizTotal = 0;
+const answered = {};
+
+const modules = document.querySelectorAll('.module');
+const navItems = document.querySelectorAll('.nav-item');
+
+function goTo(idx) {
+  modules.forEach(m => m.classList.remove('active'));
+  navItems.forEach(n => n.classList.remove('active'));
+  modules[idx].classList.add('active');
+  navItems[idx].classList.add('active');
+  currentMod = idx;
+  document.getElementById('progress-label').textContent = `Module ${idx+1} of ${totalMods}`;
+  document.getElementById('progress-bar').style.width = ((idx+1)/totalMods*100) + '%';
+  if(idx === 5) updateFinalScore();
+  window.scrollTo(0, 0);
+}
+
+function answer(btn, correct, qid) {
+  if(answered[qid]) return;
+  answered[qid] = true;
+  quizTotal++;
+  const fb = document.getElementById(qid+'-feedback');
+  const opts = btn.closest('.quiz-options').querySelectorAll('.quiz-opt');
+  opts.forEach(o => o.disabled = true);
+  if(correct) {
+    quizScore++;
+    btn.classList.add('correct');
+    fb.className = 'quiz-feedback ok';
+    fb.textContent = '✓ Correct! ' + getFeedback(qid, true);
+  } else {
+    btn.classList.add('wrong');
+    fb.className = 'quiz-feedback err';
+    fb.textContent = '✗ Not quite. ' + getFeedback(qid, false);
+    opts.forEach(o => { if(o.onclick.toString().includes('true')) o.classList.add('correct'); });
+  }
+  fb.style.display = 'block';
+  document.getElementById('score-display').textContent = `${quizScore} / ${quizTotal}`;
+  const modIdx = parseInt(qid.replace('mod','').split('-')[0]);
+  const b = document.getElementById('b'+modIdx);
+  b.textContent = '✓';
+  navItems[modIdx].classList.add('done');
+}
+
+const feedbacks = {
+  'mod0-q1': ['A Space is a live app or demo someone built and shipped — the clearest "builder" signal on HF.',''],
+  'mod1-q1': ['site:huggingface.co/spaces targets deployed apps. Adding LangGraph/CrewAI filters for agent frameworks specifically.',''],
+  'mod2-q1': ['In the URL pattern huggingface.co/{username}/spaces/{name}, the username always comes first after the domain.',''],
+  'mod3-q1': ['No published work = no signal. HF likes are passive engagement, not skill evidence. Skip and move on.',''],
+  'mod4-q1': ['HF bios are mostly unfilled. GitHub and LinkedIn both have structured location fields that people actually complete.',''],
+  'mod5-q1': ['EEOC best practice: source on skills, qualify on eligibility during the screening conversation — not in Boolean filters.',''],
+};
+function getFeedback(qid, correct) {
+  return feedbacks[qid] ? feedbacks[qid][0] : '';
+}
+
+function updateFinalScore() {
+  const el = document.getElementById('final-score');
+  const msg = document.getElementById('final-msg');
+  const sub = document.getElementById('final-sub');
+  const ring = document.getElementById('final-ring');
+  el.textContent = `${quizScore}/${quizTotal}`;
+  if(quizTotal === 0) return;
+  const pct = quizScore/quizTotal;
+  if(pct === 1) { msg.textContent = 'Perfect score — you\'re ready to source!'; sub.textContent = 'Share your playbook link with your team.'; ring.style.borderColor='var(--green)'; }
+  else if(pct >= 0.7) { msg.textContent = 'Strong performance — a quick review and you\'re set.'; sub.textContent = 'Revisit any module where you missed a question.'; ring.style.borderColor='var(--amber)'; }
+  else { msg.textContent = 'Keep practicing — revisit the modules you missed.'; ring.style.borderColor='var(--red)'; el.style.color='var(--red)'; }
+}
+
+function restart() {
+  goTo(0);
+  window.scrollTo(0,0);
+}
+
+const presets = [
+  'site:huggingface.co/spaces ("LangGraph" OR "CrewAI" OR "AutoGen") ("tool" OR "function calling" OR "ReAct")',
+  'site:huggingface.co/models ("LoRA" OR "RLHF" OR "DPO" OR "fine-tuned") ("LLaMA" OR "Mistral" OR "Gemma")',
+  'site:huggingface.co/spaces ("RAG" OR "retrieval augmented" OR "FAISS" OR "ChromaDB")',
+  'site:huggingface.co ("MCP" OR "Model Context Protocol" OR "tool_calls") "agent"',
+  'site:huggingface.co/papers ("agentic" OR "tool use" OR "RAG" OR "multi-agent") 2025',
+  'site:github.com "[username]" ("langchain" OR "transformers" OR "openai") location:"United States"',
+];
+
+function loadPreset(i) {
+  document.getElementById('lab-input').value = presets[i];
+  document.getElementById('lab-results').innerHTML = `<div class="search-hint">Press <strong style="color:var(--text)">Run in Google</strong> to open real results for this string.</div>`;
+}
+
+function runSearch() {
+  const q = document.getElementById('lab-input').value.trim();
+  if(!q) return;
+  const url = 'https://www.google.com/search?q=' + encodeURIComponent(q);
+  window.open(url, '_blank');
+  document.getElementById('lab-results').innerHTML = `
+    <div style="font-size:12px;color:var(--green);margin-bottom:8px;">↗ Opened in Google. When you find a profile URL like <code>huggingface.co/{username}/spaces/{name}</code>, the username is what you want.</div>
+    <div style="font-size:12px;color:var(--text3)">Then navigate to <code style="color:var(--green)">huggingface.co/{username}</code> to see their full public profile.</div>`;
+}
+
+const profiles = [
+  {
+    initials:'AK', bg:'var(--blue-bg)', col:'var(--blue)',
+    name:'Arjun Kapoor', handle:'@arjunbuilds',
+    bio:'AI engineer @ Databricks | Building agentic systems with LangGraph | ex-Google Brain | San Francisco, CA',
+    signals:[
+      {icon:'⬛',label:'Spaces published',value:'7 (5 agent demos)',cls:'signal-high'},
+      {icon:'⬛',label:'Models uploaded',value:'3 fine-tuned LLaMA adapters',cls:'signal-high'},
+      {icon:'⬛',label:'Model downloads',value:'12,400 total',cls:'signal-high'},
+      {icon:'⬛',label:'GitHub linked',value:'Yes — 847 contributions in 2025',cls:'signal-high'},
+      {icon:'⬛',label:'Org membership',value:'Databricks (current), EleutherAI',cls:'signal-high'},
+      {icon:'⬛',label:'Last activity',value:'3 days ago',cls:'signal-high'},
+    ],
+    verdict:'High signal — add to pipeline immediately. 7 Spaces + active GitHub + known employer = strong builder.',
+    vcolor:'var(--green)'
+  },
+  {
+    initials:'SM', bg:'var(--amber-bg)', col:'var(--amber)',
+    name:'Sara M.', handle:'@sara_mlnotes',
+    bio:'ML enthusiast | PhD student @ CMU | Writing about AI | Loves transformers',
+    signals:[
+      {icon:'⬛',label:'Spaces published',value:'1 (sentiment demo, 2023)',cls:'signal-mid'},
+      {icon:'⬛',label:'Models uploaded',value:'0',cls:'signal-low'},
+      {icon:'⬛',label:'Model downloads',value:'180',cls:'signal-mid'},
+      {icon:'⬛',label:'GitHub linked',value:'Yes — 42 contributions in 2025',cls:'signal-mid'},
+      {icon:'⬛',label:'Org membership',value:'None',cls:'signal-low'},
+      {icon:'⬛',label:'Last activity',value:'4 months ago',cls:'signal-mid'},
+    ],
+    verdict:'Mid signal — worth a quick GitHub check. PhD student may be pre-IPO talent; validate research focus before outreach.',
+    vcolor:'var(--amber)'
+  },
+  {
+    initials:'JL', bg:'var(--bg3)', col:'var(--text3)',
+    name:'Jordan L.', handle:'@jordantech99',
+    bio:'Just here to learn AI stuff',
+    signals:[
+      {icon:'⬛',label:'Spaces published',value:'0',cls:'signal-low'},
+      {icon:'⬛',label:'Models uploaded',value:'0',cls:'signal-low'},
+      {icon:'⬛',label:'Likes given',value:'312 (others\' models)',cls:'signal-low'},
+      {icon:'⬛',label:'GitHub linked',value:'No',cls:'signal-low'},
+      {icon:'⬛',label:'Org membership',value:'None',cls:'signal-low'},
+      {icon:'⬛',label:'Last activity',value:'11 months ago',cls:'signal-low'},
+    ],
+    verdict:'Skip — consumer profile only. Liking models ≠ building them. No published work, no GitHub, inactive.',
+    vcolor:'var(--red)'
+  }
+];
+
+function showProfile(i) {
+  const p = profiles[i];
+  document.getElementById('pf-avatar').textContent = p.initials;
+  document.getElementById('pf-avatar').style.background = p.bg;
+  document.getElementById('pf-avatar').style.color = p.col;
+  document.getElementById('pf-name').textContent = p.name;
+  document.getElementById('pf-handle').textContent = p.handle;
+  document.getElementById('pf-bio').textContent = p.bio;
+  let html = '';
+  p.signals.forEach(s => {
+    html += `<div class="signal-row"><span class="signal-label">${s.label}</span><span class="signal-value ${s.cls}">${s.value}</span></div>`;
+  });
+  html += `<div style="margin-top:12px;padding:10px 12px;border-radius:var(--radius-sm);background:var(--bg3);border:1px solid var(--border2);">
+    <div style="font-size:11px;font-weight:600;color:${p.vcolor};margin-bottom:4px;">VERDICT</div>
+    <div style="font-size:13px;color:var(--text2);">${p.verdict}</div>
+  </div>`;
+  document.getElementById('pf-body').innerHTML = html;
+}
+showProfile(0);
+
+function cp(btn) {
+  const block = btn.closest('.code-wrap').querySelector('.code-block');
+  navigator.clipboard.writeText(block.innerText.replace('copy','').trim()).then(() => {
+    btn.textContent = 'copied!';
+    setTimeout(() => btn.textContent = 'copy', 1600);
+  });
+}
+</script>
+</body>
+</html>
